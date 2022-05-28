@@ -164,7 +164,7 @@ module.exports = {
     'padded-blocks': [2, 'never'],
     'quotes': [2, 'single', {
       'avoidEscape': true,
-      'allowTemplateLiterals': true
+      'allowTemplateLiterals': false
     }],
     'semi': [2, 'never'],
     'semi-spacing': [2, {
