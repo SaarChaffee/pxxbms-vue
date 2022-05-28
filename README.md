@@ -9,7 +9,7 @@
 git clone https://github.com/SaarChaffee/pxxbms-vue.git
 
 # 进入项目目录
-cd vue-admin-template
+cd pxxbms-vue
 
 # 安装依赖
 yarn add core-js
