@@ -53,7 +53,6 @@ const actions = {
       if (!datas) {
         return Promise.reject(new Error('Verification failed, please Login again.'))
       } else {
-        console.log(datas)
         const { user } = datas
         const avatar = 'https://storage.googleapis.com/wcorp_public/waifulab/preview/0f3f1ce56b69ffccf0c80fd8f60225851651819750.png'
         commit('SET_NAME', user.userCode)
