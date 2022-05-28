@@ -35,13 +35,13 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
-    },
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8081/pxxbms',
-        pathRewrite: { '^/api': '' }
-      }
     }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8081',
+    //     pathRewrite: { '^/api': '/pxxbms' }
+    //   }
+    // }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
