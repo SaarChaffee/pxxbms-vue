@@ -47,6 +47,9 @@ export default {
       'avatar'
     ])
   },
+  mounted() {
+    this.$store.dispatch('user/getInfo')
+  },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
