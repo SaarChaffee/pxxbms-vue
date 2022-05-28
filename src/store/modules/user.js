@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo, logout } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -6,6 +6,7 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
+    id: '',
     avatar: ''
   }
 }
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ID: (state, id) => {
+    state.id = id
   }
 }
 
@@ -31,62 +35,55 @@ const actions = {
   // user login
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-    login({ username: username.trim(), password: password }).then(
-      (response) => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-      }
-    )
-    // return new Promise((resolve, reject) => {
-    // login({ username: username.trim(), password: password }).then(response => {
-    //   const { data } = response
-    //   commit('SET_TOKEN', data.token)
-    //   setToken(data.token)
-    //   resolve()
-    // }).catch(error => {
-    //   reject(error)
-    // })
-    // })
+    const result = await login({ username: username.trim(), password: password })
+    if (result.code === 20000) {
+      commit('SET_TOKEN', result.datas.token)
+      setToken(result.datas.token)
+      return 'ok'
+    } else {
+      return Promise.reject(new Error('faile'))
+    }
   },
 
   // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token)
-        .then((response) => {
-          const { data } = response
-
-          if (!data) {
-            return reject('Verification failed, please Login again.')
-          }
-
-          const { name, avatar } = data
-
-          commit('SET_NAME', name)
-          commit('SET_AVATAR', avatar)
-          resolve(data)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
+  async getInfo({ commit, state }) {
+    const result = await getInfo(state.token)
+    if (result.code === 20000) {
+      const { datas } = result
+      if (!datas) {
+        return Promise.reject(new Error('Verification failed, please Login again.'))
+      } else {
+        console.log(datas)
+        const { user } = datas
+        const avatar = 'https://storage.googleapis.com/wcorp_public/waifulab/preview/0f3f1ce56b69ffccf0c80fd8f60225851651819750.png'
+        commit('SET_NAME', user.userCode)
+        commit('SET_AVATAR', avatar)
+        commit('SET_ID', user.id)
+      }
+      return datas
+    }
   },
 
   // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token)
-        .then(() => {
-          removeToken() // must remove  token  first
-          resetRouter()
-          commit('RESET_STATE')
-          resolve()
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
+  async logout({ commit, state }) {
+    const result = await logout()
+    if (result.code === 20000) {
+      removeToken()
+      resetRouter()
+      commit('RESET_STATE')
+    }
+    // return new Promise((resolve, reject) => {
+    //   logout(state.token)
+    //     .then(() => {
+    //       removeToken() // must remove  token  first
+    //       resetRouter()
+    //       commit('RESET_STATE')
+    //       resolve()
+    //     })
+    //     .catch((error) => {
+    //       reject(error)
+    //     })
+    // })
   },
 
   // remove token
