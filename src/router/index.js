@@ -56,6 +56,198 @@ export const constantRoutes = [
   },
 
   {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/list',
+    meta: { title: '用户管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import('@/views/users/list/index'),
+        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/users/add/index'),
+        meta: { title: '添加', icon: 'el-icon-plus' }
+      },
+      {
+        path: 'show',
+        name: 'show',
+        component: () => import('@/views/users/show/index'),
+        meta: { title: '详情', icon: 'el-icon-tickets' }
+      },
+      {
+        path: 'alter',
+        name: 'alter',
+        component: () => import('@/views/users/alter/index'),
+        meta: { title: '修改', icon: 'el-icon-setting' }
+      },
+      {
+        path: 'role',
+        redirect: '/user/role/list',
+        component: () => import('@/views/users/roles/index'),
+        meta: { title: '角色管理', icon: 'el-icon-user' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/users/roles/list'),
+            meta: { title: '列表', icon: 'el-icon-notebook-2' }
+          },
+          {
+            path: 'add',
+            name: 'add',
+            component: () => import('@/views/users/roles/add'),
+            meta: { title: '添加', icon: 'el-icon-plus' }
+          },
+          {
+            path: 'show',
+            name: 'show',
+            component: () => import('@/views/users/roles/show'),
+            meta: { title: '详情', icon: 'el-icon-tickets' }
+          },
+          {
+            path: 'alter',
+            name: 'alter',
+            component: () => import('@/views/users/roles/alter'),
+            meta: { title: '修改', icon: 'el-icon-setting' }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/bill',
+    component: Layout,
+    redirect: '/bill/list',
+    meta: { title: '订单管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import('@/views/bills/list/index'),
+        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/bills/add/index'),
+        meta: { title: '添加', icon: 'el-icon-plus' }
+      },
+      {
+        path: 'show',
+        name: 'show',
+        component: () => import('@/views/bills/show/index'),
+        meta: { title: '详情', icon: 'el-icon-tickets' }
+      },
+      {
+        path: 'alter',
+        name: 'alter',
+        component: () => import('@/views/bills/alter/index'),
+        meta: { title: '修改', icon: 'el-icon-setting' }
+      },
+      {
+        path: 'payment',
+        redirect: '/bill/payment/list',
+        component: () => import('@/views/bills/payments/index'),
+        meta: { title: '支付方式管理', icon: 'el-icon-user' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/bills/payments/list'),
+            meta: { title: '列表', icon: 'el-icon-notebook-2' }
+          },
+          {
+            path: 'add',
+            name: 'add',
+            component: () => import('@/views/bills/payments/add'),
+            meta: { title: '添加', icon: 'el-icon-plus' }
+          },
+          {
+            path: 'show',
+            name: 'show',
+            component: () => import('@/views/bills/payments/show'),
+            meta: { title: '详情', icon: 'el-icon-tickets' }
+          },
+          {
+            path: 'alter',
+            name: 'alter',
+            component: () => import('@/views/bills/payments/alter'),
+            meta: { title: '修改', icon: 'el-icon-setting' }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/good',
+    component: Layout,
+    redirect: '/good/list',
+    meta: { title: '商品管理', icon: 'el-icon-user' },
+    children: [
+      {
+        path: 'list',
+        name: 'list',
+        component: () => import('@/views/goods/list/index'),
+        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+      },
+      {
+        path: 'add',
+        name: 'add',
+        component: () => import('@/views/goods/add/index'),
+        meta: { title: '添加', icon: 'el-icon-plus' }
+      },
+      {
+        path: 'show',
+        name: 'show',
+        component: () => import('@/views/goods/show/index'),
+        meta: { title: '详情', icon: 'el-icon-tickets' }
+      },
+      {
+        path: 'alter',
+        name: 'alter',
+        component: () => import('@/views/goods/alter/index'),
+        meta: { title: '修改', icon: 'el-icon-setting' }
+      },
+      {
+        path: 'type',
+        redirect: '/good/type/list',
+        component: () => import('@/views/goods/types/index'),
+        meta: { title: '商品类型管理', icon: 'el-icon-user' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/goods/types/list'),
+            meta: { title: '列表', icon: 'el-icon-notebook-2' }
+          },
+          {
+            path: 'add',
+            name: 'add',
+            component: () => import('@/views/goods/types/add'),
+            meta: { title: '添加', icon: 'el-icon-plus' }
+          },
+          {
+            path: 'show',
+            name: 'show',
+            component: () => import('@/views/goods/types/show'),
+            meta: { title: '详情', icon: 'el-icon-tickets' }
+          },
+          {
+            path: 'alter',
+            name: 'alter',
+            component: () => import('@/views/goods/types/alter'),
+            meta: { title: '修改', icon: 'el-icon-setting' }
+          }
+        ]
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
@@ -90,64 +282,6 @@ export const constantRoutes = [
     ]
   },
 
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
