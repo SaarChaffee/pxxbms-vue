@@ -32,17 +32,17 @@
       stripe
       style="width: 100%"
     >
-      <el-table-column label="用户账号" width="140">
+      <el-table-column label="用户账号" width="180">
         <template slot-scope="scope">
           {{ scope.row.userCode }}
         </template>
       </el-table-column>
-      <el-table-column label="用户名称" width="140">
+      <el-table-column label="用户名称" width="180">
         <template slot-scope="scope">
           {{ scope.row.userName }}
         </template>
       </el-table-column>
-      <el-table-column label="年龄" width="100">
+      <el-table-column label="年龄" width="140">
         <template slot-scope="scope">
           {{ scope.row.age }}
         </template>
@@ -52,12 +52,12 @@
           {{ scope.row.gender === 1 ? '男' : '女' }}
         </template>
       </el-table-column>
-      <el-table-column label="电话" width="180">
+      <el-table-column label="电话" width="220">
         <template slot-scope="scope">
           {{ scope.row.phone }}
         </template>
       </el-table-column>
-      <el-table-column label="用户角色" width="100">
+      <el-table-column label="用户角色" width="140">
         <template slot-scope="scope">
           {{ scope.row.userRoleName }}
         </template>
@@ -84,6 +84,7 @@
       </el-table-column>
     </el-table>
     <el-pagination
+      style="margin-top: 10px;text-align: center;"
       :current-page="form.pageParam.current"
       :page-size="form.pageParam.size"
       :page-sizes="[5,10,20,50]"
