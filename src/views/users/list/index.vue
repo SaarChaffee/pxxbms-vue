@@ -19,6 +19,9 @@
       <el-form-item prop="current">
         <el-input v-model="form.pageParam.current" type="hidden" />
       </el-form-item>
+      <el-form-item prop="size">
+        <el-input v-model="form.pageParam.size" type="hidden" />
+      </el-form-item>
     </el-form>
     <el-table
       v-loading="loading"
@@ -80,6 +83,17 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page="form.pageParam.current"
+      :page-size="form.pageParam.size"
+      :page-sizes="[5,10,20,50]"
+      :total="form.pageParam.total"
+      :page-count="form.pageParam.pages"
+      :pager-count="5"
+      layout="total, sizes, prev, pager, next, jumper"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -97,7 +111,7 @@ export default {
         pageParam: {
           'records': [],
           'total': 0,
-          'size': 0,
+          'size': 10,
           'current': 1,
           'orders': [],
           'optimizeCountSql': true,
@@ -123,7 +137,8 @@ export default {
       const { datas } = await list({
         queryUserRole: this.form.queryUserRole,
         queryUserName: this.form.queryUserName,
-        pageIndex: this.form.pageParam.current
+        pageIndex: this.form.pageParam.current,
+        pageSize: this.form.pageParam.size
       })
       this.form.roleList = datas.roleList
       this.form.queryUserRole = datas.queryUserRole
@@ -132,6 +147,14 @@ export default {
     },
     reset() {
       this.$refs['form'].resetFields()
+      this.getList()
+    },
+    handleSizeChange(size) {
+      this.form.pageParam.size = size
+      this.getList()
+    },
+    handleCurrentChange(current) {
+      this.form.pageParam.current = current
       this.getList()
     }
   }
