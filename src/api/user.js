@@ -53,3 +53,32 @@ export function add(params) {
     params: { ...params }
   })
 }
+
+export function toUpd(id) {
+  return request({
+    url: '/user/toUpd/' + id,
+    method: 'get'
+  })
+}
+
+export function upd(params) {
+  return request({
+    url: '/user/upd',
+    method: 'post',
+    params: { ...params }
+  })
+}
+
+export function toShow(id) {
+  return request({
+    url: '/user/list/' + id,
+    method: 'get'
+  })
+}
+
+export function delUser(id) {
+  return request({
+    url: '/user/delUser/' + id,
+    method: 'get'
+  })
+}

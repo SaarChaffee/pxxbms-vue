@@ -74,14 +74,16 @@ export const constantRoutes = [
         meta: { title: '添加', icon: 'el-icon-plus' }
       },
       {
-        path: 'show',
+        path: 'show/:id',
         name: 'show',
+        hidden: true,
         component: () => import('@/views/users/show/index'),
         meta: { title: '详情', icon: 'el-icon-tickets' }
       },
       {
-        path: 'alter',
+        path: 'alter/:id',
         name: 'alter',
+        hidden: true,
         component: () => import('@/views/users/alter/index'),
         meta: { title: '修改', icon: 'el-icon-setting' }
       },
@@ -105,12 +107,14 @@ export const constantRoutes = [
           },
           {
             path: 'show',
+            hidden: true,
             name: 'show',
             component: () => import('@/views/users/roles/show'),
             meta: { title: '详情', icon: 'el-icon-tickets' }
           },
           {
             path: 'alter',
+            hidden: true,
             name: 'alter',
             component: () => import('@/views/users/roles/alter'),
             meta: { title: '修改', icon: 'el-icon-setting' }
@@ -139,12 +143,14 @@ export const constantRoutes = [
       },
       {
         path: 'show',
+        hidden: true,
         name: 'show',
         component: () => import('@/views/bills/show/index'),
         meta: { title: '详情', icon: 'el-icon-tickets' }
       },
       {
         path: 'alter',
+        hidden: true,
         name: 'alter',
         component: () => import('@/views/bills/alter/index'),
         meta: { title: '修改', icon: 'el-icon-setting' }
@@ -169,12 +175,14 @@ export const constantRoutes = [
           },
           {
             path: 'show',
+            hidden: true,
             name: 'show',
             component: () => import('@/views/bills/payments/show'),
             meta: { title: '详情', icon: 'el-icon-tickets' }
           },
           {
             path: 'alter',
+            hidden: true,
             name: 'alter',
             component: () => import('@/views/bills/payments/alter'),
             meta: { title: '修改', icon: 'el-icon-setting' }
@@ -203,12 +211,14 @@ export const constantRoutes = [
       },
       {
         path: 'show',
+        hidden: true,
         name: 'show',
         component: () => import('@/views/goods/show/index'),
         meta: { title: '详情', icon: 'el-icon-tickets' }
       },
       {
         path: 'alter',
+        hidden: true,
         name: 'alter',
         component: () => import('@/views/goods/alter/index'),
         meta: { title: '修改', icon: 'el-icon-setting' }
@@ -233,12 +243,14 @@ export const constantRoutes = [
           },
           {
             path: 'show',
+            hidden: true,
             name: 'show',
             component: () => import('@/views/goods/types/show'),
             meta: { title: '详情', icon: 'el-icon-tickets' }
           },
           {
             path: 'alter',
+            hidden: true,
             name: 'alter',
             component: () => import('@/views/goods/types/alter'),
             meta: { title: '修改', icon: 'el-icon-setting' }
@@ -247,41 +259,6 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '例子', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '表格', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: '表单', icon: 'form' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

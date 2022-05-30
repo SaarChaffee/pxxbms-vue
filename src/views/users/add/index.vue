@@ -7,7 +7,7 @@
       <el-form-item label="姓名" prop="userName">
         <el-input v-model="form.userName" type="text" auto-complete="false" />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="userPassword">
         <el-input v-model="form.userPassword" type="password" auto-complete="false" />
       </el-form-item>
       <el-form-item label="确认密码" prop="resurePassword">
@@ -61,7 +61,6 @@ export default {
       } else {
         setTimeout(() => {
           exist(value).then(({ data }) => {
-            console.log(data)
             if (!data) {
               return callback()
             } else {
@@ -80,21 +79,6 @@ export default {
             return callback()
           } else {
             return callback(new Error('两次密码输入不一致'))
-          }
-        }, 500)
-      }
-    }
-    const checkBitchday = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('生日不能为空'))
-      } else {
-        setTimeout(() => {
-          const startYear = new Date(new Date().getFullYear() - 100, new Date().getMonth(), new Date().getDate()).toLocaleDateString().split('/')[0]
-          const now = value.split('-')[0]
-          if (startYear > now) {
-            return callback(new Error('非法的有效日期'))
-          } else {
-            return callback()
           }
         }, 500)
       }
@@ -125,7 +109,7 @@ export default {
     return {
       pickerOption: {
         disabledDate(time) {
-          return time.getTime() > Date.now()
+          return time.getTime() > Date.now() || time.getTime() < new Date(new Date().getFullYear() - 100, new Date().getMonth(), new Date().getDate())
         }
       },
       form: {
@@ -161,8 +145,7 @@ export default {
           { required: true, message: '请选择性别', trigger: 'blur' }
         ],
         birthday: [
-          { required: true, message: '请选择出生日期', trigger: 'blur' },
-          { validator: checkBitchday, trigger: 'blur' }
+          { required: true, message: '请选择出生日期', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
@@ -186,7 +169,8 @@ export default {
     submitForm(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          add({ ...this.form, currentId: this.$store.state.id }).then(({ success, message }) => {
+          console.log(this.form)
+          add({ ...this.form, currentId: this.$store.state.user.id }).then(({ success, message }) => {
             if (success) {
               this.$message({
                 type: 'success',

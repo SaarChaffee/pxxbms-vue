@@ -4,7 +4,7 @@
 
 <script>
 export default {
- name: 'TypeShow'
+  name: 'TypeShow'
 }
 </script>
 
