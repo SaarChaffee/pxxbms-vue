@@ -14,7 +14,7 @@
         <el-button type="primary" @click.native="getList()">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click.native="reset()">重置</el-button>
+        <el-button type="info" @click.native="reset()">重置</el-button>
       </el-form-item>
       <el-form-item prop="current">
         <el-input v-model="form.pageParam.current" type="hidden" />
@@ -70,6 +70,7 @@
           >查看
           </el-button>
           <el-button
+            type="primary"
             size="mini"
             @click="handleEdit(scope.$index, scope.row)"
           >编辑
@@ -135,6 +136,7 @@ export default {
   },
   methods: {
     async getList() {
+      this.loading = true
       const { datas } = await list({
         queryUserRole: this.form.queryUserRole,
         queryUserName: this.form.queryUserName,
@@ -145,6 +147,9 @@ export default {
       this.form.queryUserRole = datas.queryUserRole
       this.form.pageParam = datas.pageParam
       this.users = datas.users
+      setTimeout(() => {
+        this.loading = false
+      }, 500)
     },
     reset() {
       this.$refs['form'].resetFields()
