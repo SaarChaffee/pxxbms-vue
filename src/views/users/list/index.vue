@@ -66,19 +66,19 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="toShow(scope.row.id)"
           >查看
           </el-button>
           <el-button
             type="primary"
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="toAlter(scope.row.id)"
           >编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
+            @click="delUser(scope.row.id)"
           >删除
           </el-button>
         </template>
@@ -100,9 +100,19 @@
 </template>
 
 <script>
-import { list } from '@/api/user'
+import { list, delUser } from '@/api/user'
 export default {
   name: 'UserList',
+  filters: {
+    stringToInt({ total, size, pages, currnet }) {
+      return {
+        total: Number(total),
+        size: Number(size),
+        pages: Number(pages),
+        current: Number(currnet)
+      }
+    }
+  },
   data() {
     return {
       loading: false,
@@ -111,15 +121,9 @@ export default {
         queryUserRole: 0,
         queryUserName: '',
         pageParam: {
-          'records': [],
           'total': 0,
           'size': 10,
           'current': 1,
-          'orders': [],
-          'optimizeCountSql': true,
-          'searchCount': true,
-          'countId': null,
-          'maxLimit': null,
           'pages': 0
         }
       },
@@ -137,16 +141,26 @@ export default {
   methods: {
     async getList() {
       this.loading = true
-      const { datas } = await list({
+      const { datas: {
+        roleList,
+        queryUserRole,
+        pageParam: { pages, size, total, current },
+        users
+      }} = await list({
         queryUserRole: this.form.queryUserRole,
         queryUserName: this.form.queryUserName,
         pageIndex: this.form.pageParam.current,
         pageSize: this.form.pageParam.size
       })
-      this.form.roleList = datas.roleList
-      this.form.queryUserRole = datas.queryUserRole
-      this.form.pageParam = datas.pageParam
-      this.users = datas.users
+      this.form.roleList = roleList
+      this.form.queryUserRole = queryUserRole
+      this.form.pageParam = {
+        pages: Number(pages),
+        size: Number(size),
+        total: Number(total),
+        current: Number(current)
+      }
+      this.users = users
       setTimeout(() => {
         this.loading = false
       }, 500)
@@ -162,6 +176,39 @@ export default {
     handleCurrentChange(current) {
       this.form.pageParam.current = current
       this.getList()
+    },
+    toAlter(id) {
+      this.$router.push({ path: '/user/alter/' + id })
+    },
+    toShow(id) {
+      this.$router.push({ path: '/user/show/' + id })
+    },
+    delUser(id) {
+      this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delUser(id).then(({ success }) => {
+          if (success) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.getList()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '删除失败!'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     }
   }
 }
