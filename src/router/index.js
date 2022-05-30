@@ -74,16 +74,16 @@ export const constantRoutes = [
         meta: { title: '添加', icon: 'el-icon-plus' }
       },
       {
-        path: 'show',
+        path: 'show/:id',
         name: 'show',
         component: () => import('@/views/users/show/index'),
-        meta: { title: '详情', icon: 'el-icon-tickets' }
+        meta: { title: '详情', breadcrumb: false, icon: 'el-icon-tickets' }
       },
       {
-        path: 'alter',
+        path: 'alter/:id',
         name: 'alter',
         component: () => import('@/views/users/alter/index'),
-        meta: { title: '修改', icon: 'el-icon-setting' }
+        meta: { title: '修改', breadcrumb: false, icon: 'el-icon-setting' }
       },
       {
         path: 'role',
