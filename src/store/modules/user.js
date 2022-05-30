@@ -62,7 +62,7 @@ const actions = {
         commit('SET_NAME', user.userCode)
         commit('SET_AVATAR', avatar)
         commit('SET_ID', user.id)
-        commit('SET_ROLE', user.role)
+        commit('SET_ROLE', user.userRole)
       }
       return datas
     }
