@@ -108,14 +108,14 @@ export const constantRoutes = [
         meta: { title: '添加', icon: 'el-icon-plus' }
       },
       {
-        path: 'show',
+        path: 'show/:id',
         hidden: true,
         name: 'show',
         component: () => import('@/views/bills/show/index'),
         meta: { title: '详情', icon: 'el-icon-tickets' }
       },
       {
-        path: 'alter',
+        path: 'alter/:id',
         hidden: true,
         name: 'alter',
         component: () => import('@/views/bills/alter/index'),
@@ -142,14 +142,14 @@ export const constantRoutes = [
         meta: { title: '添加', icon: 'el-icon-plus' }
       },
       {
-        path: 'show',
+        path: 'show/:id',
         hidden: true,
         name: 'show',
         component: () => import('@/views/goods/show/index'),
         meta: { title: '详情', icon: 'el-icon-tickets' }
       },
       {
-        path: 'alter',
+        path: 'alter/:id',
         hidden: true,
         name: 'alter',
         component: () => import('@/views/goods/alter/index'),
@@ -174,14 +174,14 @@ export const constantRoutes = [
             meta: { title: '添加', icon: 'el-icon-plus' }
           },
           {
-            path: 'show',
+            path: 'show/:id',
             hidden: true,
             name: 'show',
             component: () => import('@/views/goods/types/show'),
             meta: { title: '详情', icon: 'el-icon-tickets' }
           },
           {
-            path: 'alter',
+            path: 'alter/:id',
             hidden: true,
             name: 'alter',
             component: () => import('@/views/goods/types/alter'),
