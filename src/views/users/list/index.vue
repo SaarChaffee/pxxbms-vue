@@ -5,7 +5,7 @@
         <el-input v-model="form.queryUserName" placeholder="用户名称" />
       </el-form-item>
       <el-form-item label="用户角色" prop="queryUserRole">
-        <el-select v-model.number="form.queryUserRole" clearable placeholder="---请选择---">
+        <el-select v-model="form.queryUserRole" clearable placeholder="---请选择---">
           <el-option :value="0" disabled label="---请选择---" />
           <el-option v-for="role in form.roleList" :key="role.id" :label="role.roleName" :value="role.id" />
         </el-select>

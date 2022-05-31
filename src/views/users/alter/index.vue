@@ -27,7 +27,7 @@
         <el-input v-model="form.address" type="text" auto-complete="false" />
       </el-form-item>
       <el-form-item label="角色" prop="userRole">
-        <el-select v-model.number="form.userRole" clearable placeholder="---请选择---">
+        <el-select v-model="form.userRole" clearable placeholder="---请选择---">
           <el-option :value="0" disabled label="---请选择---" />
           <el-option v-for="role in roleList" :key="role.id" :label="role.roleName" :value="role.id" />
         </el-select>
