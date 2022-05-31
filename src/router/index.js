@@ -86,40 +86,6 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/users/alter/index'),
         meta: { title: '修改', icon: 'el-icon-setting' }
-      },
-      {
-        path: 'role',
-        redirect: '/user/role/list',
-        component: () => import('@/views/users/roles/index'),
-        meta: { title: '角色管理', icon: 'el-icon-user' },
-        children: [
-          {
-            path: 'list',
-            name: 'list',
-            component: () => import('@/views/users/roles/list'),
-            meta: { title: '列表', icon: 'el-icon-notebook-2' }
-          },
-          {
-            path: 'add',
-            name: 'add',
-            component: () => import('@/views/users/roles/add'),
-            meta: { title: '添加', icon: 'el-icon-plus' }
-          },
-          {
-            path: 'show',
-            hidden: true,
-            name: 'show',
-            component: () => import('@/views/users/roles/show'),
-            meta: { title: '详情', icon: 'el-icon-tickets' }
-          },
-          {
-            path: 'alter',
-            hidden: true,
-            name: 'alter',
-            component: () => import('@/views/users/roles/alter'),
-            meta: { title: '修改', icon: 'el-icon-setting' }
-          }
-        ]
       }
     ]
   },
@@ -154,40 +120,6 @@ export const constantRoutes = [
         name: 'alter',
         component: () => import('@/views/bills/alter/index'),
         meta: { title: '修改', icon: 'el-icon-setting' }
-      },
-      {
-        path: 'payment',
-        redirect: '/bill/payment/list',
-        component: () => import('@/views/bills/payments/index'),
-        meta: { title: '支付方式管理', icon: 'el-icon-user' },
-        children: [
-          {
-            path: 'list',
-            name: 'list',
-            component: () => import('@/views/bills/payments/list'),
-            meta: { title: '列表', icon: 'el-icon-notebook-2' }
-          },
-          {
-            path: 'add',
-            name: 'add',
-            component: () => import('@/views/bills/payments/add'),
-            meta: { title: '添加', icon: 'el-icon-plus' }
-          },
-          {
-            path: 'show',
-            hidden: true,
-            name: 'show',
-            component: () => import('@/views/bills/payments/show'),
-            meta: { title: '详情', icon: 'el-icon-tickets' }
-          },
-          {
-            path: 'alter',
-            hidden: true,
-            name: 'alter',
-            component: () => import('@/views/bills/payments/alter'),
-            meta: { title: '修改', icon: 'el-icon-setting' }
-          }
-        ]
       }
     ]
   },
