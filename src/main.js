@@ -14,6 +14,9 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import moment from 'moment'
+import 'moment/dist/locale/zh-cn'
+moment.locale('zh-cn')
 
 /**
  * If you don't want to use mock-server
@@ -34,6 +37,9 @@ Vue.use(ElementUI, { locale })
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+Vue.filter('dateFormat', (value, pattern = 'YYYY-MM-DD HH:mm:ss') => {
+  return moment(value).format(pattern)
+})
 
 new Vue({
   el: '#app',
