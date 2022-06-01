@@ -115,3 +115,16 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+export function accMul(arg1, arg2) {
+  let m = 0
+  const s1 = arg1.toString()
+  const s2 = arg2.toString()
+  if (s1.includes('.')) {
+    m += s1.split('.')[1].length
+  }
+  if (s2.includes('.')) {
+    m += s2.split('.')[1].length
+  }
+  return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m)
+}
