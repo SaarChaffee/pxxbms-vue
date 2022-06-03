@@ -53,7 +53,7 @@ export function toShow(id) {
   })
 }
 
-export function delgood(id) {
+export function del(id) {
   return request({
     url: '/good/del/' + id,
     method: 'get'
