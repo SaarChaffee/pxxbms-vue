@@ -38,6 +38,20 @@
             </el-col>
           </el-row>
         </div>
+        <el-row>
+          <el-col :span="5">
+            <el-form-item label="商品编号" />
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="商品名称" />
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="商品数量" />
+          </el-col>
+          <el-col :span="5">
+            <el-form-item label="商品单价" />
+          </el-col>
+        </el-row>
         <el-row
           v-for="(good,index) in form.goods"
           :key="index"
@@ -115,7 +129,6 @@
 
 <script>
 import { toShow } from '@/api/bill'
-import moment from 'moment'
 export default {
   name: 'BillShow',
   data() {
