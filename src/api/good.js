@@ -23,11 +23,11 @@ export function exist(goodCode) {
   })
 }
 
-export function add(params) {
+export function add(data) {
   return request({
-    url: '/good/add',
+    url: '/good/add/' + data.currentId,
     method: 'post',
-    params: { ...params }
+    data
   })
 }
 
@@ -38,11 +38,11 @@ export function toUpd(id) {
   })
 }
 
-export function upd(params) {
+export function upd(data) {
   return request({
-    url: '/good/upd',
+    url: '/good/upd/' + data.currentId,
     method: 'post',
-    params: { ...params }
+    data
   })
 }
 
