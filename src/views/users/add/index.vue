@@ -104,9 +104,9 @@ export default {
         return callback(new Error('姓名不能为空'))
       } else {
         if ((/^((?:[\u3400-\u4DB5\u4E00-\u9FEA\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0])|(\w))+$/.test(value))) {
-          return callback(new Error('姓名格式错误'))
-        } else {
           return callback()
+        } else {
+          return callback(new Error('姓名格式错误'))
         }
       }
     }
@@ -167,7 +167,7 @@ export default {
       rules: {
         userCode: [
           { validator: checkCode, required: true, trigger: 'blur' },
-          { min: 3, max: 12, message: '请输入3位及以上12位及以下英文字母和数字', trigger: 'blur' }
+          { min: 3, max: 12, message: '请输入3位及以上12位及以下汉字字母和数字', trigger: 'blur' }
         ],
         userName: [
           { validator: checkName, required: true, trigger: 'blur' },
