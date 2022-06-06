@@ -2,16 +2,36 @@
   <div class="app-container">
     <el-form ref="form" :model="form" status-icon :rules="rules">
       <el-form-item label="用户账号" prop="userCode">
-        <el-input v-model="form.userCode" type="text" auto-complete="false" />
+        <el-input
+          v-model.trim="form.userCode"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入3位及以上12位及以下英文字母和数字"
+        />
       </el-form-item>
       <el-form-item label="姓名" prop="userName">
-        <el-input v-model="form.userName" type="text" auto-complete="false" />
+        <el-input
+          v-model.trim="form.userName"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入3位及以上12位及以下的字符"
+        />
       </el-form-item>
       <el-form-item label="密码" prop="userPassword">
-        <el-input v-model="form.userPassword" type="password" auto-complete="false" />
+        <el-input
+          v-model.trim="form.userPassword"
+          type="password"
+          auto-complete="false"
+          placeholder="请输入长度大于等于3的字符"
+        />
       </el-form-item>
       <el-form-item label="确认密码" prop="resurePassword">
-        <el-input v-model="form.resurePassword" type="password" auto-complete="false" />
+        <el-input
+          v-model.trim="form.resurePassword"
+          type="password"
+          auto-complete="false"
+          placeholder="再次确认密码"
+        />
       </el-form-item>
       <el-form-item label="性别" prop="gender">
         <el-radio-group v-model="form.gender">
@@ -31,10 +51,15 @@
         />
       </el-form-item>
       <el-form-item label="电话" prop="phone">
-        <el-input v-model="form.phone" type="text" auto-complete="false" />
+        <el-input
+          v-model.trim="form.phone"
+          type="text"
+          auto-complete="false"
+          placeholder="输入11位电话号码"
+        />
       </el-form-item>
       <el-form-item label="地址" prop="address">
-        <el-input v-model="form.address" type="text" auto-complete="false" />
+        <el-input v-model.trim="form.address" type="text" auto-complete="false" />
       </el-form-item>
       <el-form-item label="角色" prop="userRole">
         <el-select v-model="form.userRole" clearable placeholder="---请选择---">
@@ -59,15 +84,30 @@ export default {
       if (!value) {
         return callback(new Error('账户不能为空'))
       } else {
-        setTimeout(() => {
-          exist(value).then(({ data }) => {
-            if (!data) {
-              return callback()
-            } else {
-              return callback(new Error('账户已被使用，请重新输入'))
-            }
-          })
-        }, 500)
+        if ((/^[\w]+$/.test(value))) {
+          setTimeout(() => {
+            exist(value).then(({ data }) => {
+              if (!data) {
+                return callback()
+              } else {
+                return callback(new Error('账户已被使用，请重新输入'))
+              }
+            })
+          }, 500)
+        } else {
+          return callback(new Error('账户格式错误'))
+        }
+      }
+    }
+    const checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('姓名不能为空'))
+      } else {
+        if ((/^.*[ ].*$/.test(value))) {
+          return callback(new Error('姓名格式错误'))
+        } else {
+          return callback()
+        }
       }
     }
     const checkPassword = (rule, value, callback) => {
@@ -88,7 +128,7 @@ export default {
         return callback(new Error('手机不能为空'))
       } else {
         setTimeout(() => {
-          if (/^1[34578]\d{9}$/.test(value)) {
+          if (/^1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/.test(value)) {
             return callback()
           } else {
             return callback(new Error('手机号码不合法'))
@@ -126,12 +166,12 @@ export default {
       roleList: [],
       rules: {
         userCode: [
-          { required: true, message: '请输入账号', trigger: 'blur' },
-          { validator: checkCode, trigger: 'blur' }
+          { validator: checkCode, required: true, trigger: 'blur' },
+          { min: 3, max: 12, message: '请输入3位及以上12位及以下英文字母和数字', trigger: 'blur' }
         ],
         userName: [
-          { required: true, message: '请输入姓名', trigger: 'blur' },
-          { min: 2, message: '请输入长度大于等于2的字符', trigger: 'blur' }
+          { validator: checkName, required: true, trigger: 'blur' },
+          { min: 3, max: 12, message: '请输入3位及以上12位及以下的字符', trigger: 'blur' }
         ],
         userPassword: [
           { required: true, message: '请输入密码', trigger: 'blur' },

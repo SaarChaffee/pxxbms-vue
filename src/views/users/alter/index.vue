@@ -2,7 +2,12 @@
   <div class="app-container">
     <el-form ref="form" :model="form" status-icon :rules="rules">
       <el-form-item label="姓名" prop="userName">
-        <el-input v-model="form.userName" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.userName"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入3位及以上12位及以下的字符"
+        />
       </el-form-item>
       <el-form-item label="性别" prop="gender">
         <el-radio-group v-model="form.gender">
@@ -21,7 +26,12 @@
         />
       </el-form-item>
       <el-form-item label="电话" prop="phone">
-        <el-input v-model="form.phone" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.phone"
+          type="text"
+          auto-complete="false"
+          laceholder="输入11位电话号码"
+        />
       </el-form-item>
       <el-form-item label="地址" prop="address">
         <el-input v-model="form.address" type="text" auto-complete="false" />
@@ -46,12 +56,23 @@ import moment from 'moment'
 export default {
   name: 'UserAlter',
   data() {
+    const checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('姓名不能为空'))
+      } else {
+        if ((/^.*[ ].*$/.test(value))) {
+          return callback(new Error('姓名格式错误'))
+        } else {
+          return callback()
+        }
+      }
+    }
     const checkPhone = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('手机不能为空'))
       } else {
         setTimeout(() => {
-          if (/^1[34578]\d{9}$/.test(value)) {
+          if (/^1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/.test(value)) {
             return callback()
           } else {
             return callback(new Error('手机号码不合法'))
@@ -83,7 +104,7 @@ export default {
       roleList: [],
       rules: {
         userName: [
-          { required: true, message: '请输入姓名', trigger: 'blur' },
+          { validator: checkName, required: true, message: '请输入姓名', trigger: 'blur' },
           { min: 2, message: '请输入长度大于等于2的字符', trigger: 'blur' }
         ],
         gender: [

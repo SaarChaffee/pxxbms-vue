@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-form ref="form" :model="form" status-icon :rules="rules">
+    <el-form ref="form" :model="form" status-icon>
       <el-form-item label="订单编号" prop="billCode">
-        <el-input v-model="form.billCode" type="text" auto-complete="false" />
+        <el-input v-model="form.billCode" type="text" readonly auto-complete="false" />
       </el-form-item>
       <el-card shadow="never" style="border: 1px solid #DCDFE6;padding-bottom: 0px;">
         <div slot="header" class="clearfix">
@@ -59,7 +59,7 @@
           :label="'商品 ' + (index + 1)"
         >
           <el-col :span="5">
-            <el-form-item :prop="'goods.'+index+'.goodCode'" :rules="rules.goodCode">
+            <el-form-item :prop="'goods.'+index+'.goodCode'">
               <el-input v-model="good.goodCode" readonly placeholder="商品编号" />
             </el-form-item>
           </el-col>
@@ -67,13 +67,13 @@
             <el-input v-model="good.goodName" readonly placeholder="商品名称" />
           </el-col>
           <el-col :span="5">
-            <el-form-item :prop="'goods.'+index+'.quantity'" :rules="rules.quantity">
+            <el-form-item :prop="'goods.'+index+'.quantity'">
               <el-input v-model.number="good.quantity" readonly placeholder="商品数量" />
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item :prop="'goods.'+index+'.price'" :rules="rules.price">
-              <el-input v-model="good.price" placeholder="商品单价" />
+            <el-form-item :prop="'goods.'+index+'.price'">
+              <el-input v-model="good.price" readonly placeholder="商品单价" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -87,16 +87,8 @@
       <el-form-item label="地址" prop="address">
         <el-input v-model="form.address" type="text" auto-complete="false" />
       </el-form-item>
-      <el-form-item label="支付方式" prop="paymentMethod">
-        <el-select v-model="form.paymentMethod" clearable placeholder="---请选择---">
-          <el-option :value="0" disabled label="---请选择---" />
-          <el-option
-            v-for="method in methodList"
-            :key="method.id"
-            :label="method.typeName"
-            :value="method.id"
-          />
-        </el-select>
+      <el-form-item label="支付方式" prop="paymentMethodName">
+        <el-input v-model="form.paymentMethodName" type="text" readonly />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
@@ -108,32 +100,9 @@
 
 <script>
 import { toUpd, upd } from '@/api/bill'
-import { accMul } from '@/utils'
 export default {
   name: 'BillAdd',
   data() {
-    const checkPrice = (rule, value, callback) => {
-      value = Number(value)
-      if (value < 1 || isNaN(value) || !/^\d+\.?\d*$/.test(value)) {
-        return callback(new Error('请输入大于0的价格'))
-      } else {
-        const index = Number(rule.field.split('.')[1])
-        if (this.form.goods[index].quantity !== '') {
-          this.form.goods[index].totalPrice = accMul(this.form.goods[index].quantity, value)
-          this.updateTotal()
-        }
-        return callback()
-      }
-    }
-    const checkMethod = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('支付方式不能为空'))
-      } else {
-        setTimeout(() => {
-          return value > 0 ? callback() : callback(new Error('角色不能为空'))
-        }, 500)
-      }
-    }
     return {
       form: {
         id: '',
@@ -141,19 +110,9 @@ export default {
         goodCount: 0,
         totalPrice: 0.0,
         address: '',
-        paymentMethod: 0,
+        paymentMethodName: '',
         version: '',
         goods: []
-      },
-      methodList: [],
-      rules: {
-        paymentMethod: [
-          { required: true, message: '请选择角色', trigger: 'blur' },
-          { validator: checkMethod, trigger: 'blur' }
-        ],
-        price: [
-          { validator: checkPrice, required: true, trigger: 'blur' }
-        ]
       }
     }
   },
@@ -167,10 +126,6 @@ export default {
         this.form = billvo
         this.methodList = methodList
       })
-    },
-    updateTotal() {
-      console.log(this.form.toString)
-      this.form.totalPrice = this.form.goods.reduce((x, y) => x + y.totalPrice, 0)
     },
     submitForm(name) {
       this.$refs[name].validate((valid) => {

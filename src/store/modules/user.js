@@ -55,7 +55,7 @@ const actions = {
     if (result.code === 20000) {
       const { datas } = result
       if (!datas) {
-        return Promise.reject(new Error('Verification failed, please Login again.'))
+        return Promise.reject(new Error('验证失败，请重新登录'))
       } else {
         const { user } = datas
         const avatar = 'https://storage.googleapis.com/wcorp_public/waifulab/preview/0f3f1ce56b69ffccf0c80fd8f60225851651819750.png'

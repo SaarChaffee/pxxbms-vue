@@ -2,7 +2,12 @@
   <div class="app-container">
     <el-form ref="form" :model="form" status-icon :rules="rules">
       <el-form-item label="订单编号" prop="billCode">
-        <el-input v-model="form.billCode" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.billCode"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入3位及以上12位及以下英文字母和数字"
+        />
       </el-form-item>
       <el-card shadow="never" style="border: 1px solid #DCDFE6;padding-bottom: 0px;">
         <div slot="header" class="clearfix">
@@ -49,16 +54,16 @@
         </div>
         <el-row>
           <el-col :span="5">
-            <el-form-item label="商品编号" />
+            <el-form-item label="商品编号" :rules="rules.goodCodeInput" />
           </el-col>
           <el-col :span="5">
             <el-form-item label="商品名称" />
           </el-col>
           <el-col :span="5">
-            <el-form-item label="商品数量" />
+            <el-form-item label="商品数量" :rules="rules.quantity" />
           </el-col>
           <el-col :span="5">
-            <el-form-item label="商品单价" />
+            <el-form-item label="商品单价" :rules="rules.price" />
           </el-col>
         </el-row>
         <el-row
@@ -98,10 +103,21 @@
         </el-row>
       </el-card>
       <el-form-item label="顾客账号" prop="customerCodeInput">
-        <el-input v-model="form.customerCodeInput" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.customerCodeInput"
+          type="text"
+          auto-complete="false"
+          placeholder="顾客账号"
+        />
       </el-form-item>
       <el-form-item label="顾客姓名" prop="customerName">
-        <el-input v-model="form.customerName" readonly type="text" auto-complete="false" />
+        <el-input
+          v-model="form.customerName"
+          readonly
+          type="text"
+          auto-complete="false"
+          placeholder="顾客姓名"
+        />
       </el-form-item>
       <el-form-item label="地址" prop="address">
         <el-input v-model="form.address" type="text" auto-complete="false" />
@@ -137,36 +153,44 @@ export default {
       if (!value) {
         return callback(new Error('订单编号不能为空'))
       } else {
-        setTimeout(() => {
-          exist(value).then(({ data }) => {
-            if (!data) {
-              return callback()
-            } else {
-              return callback(new Error('订单编号已被使用，请重新输入'))
-            }
-          })
-        }, 500)
+        if ((/^[\w]+$/.test(value))) {
+          setTimeout(() => {
+            exist(value).then(({ data }) => {
+              if (!data) {
+                return callback()
+              } else {
+                return callback(new Error('订单编号已被使用，请重新输入'))
+              }
+            })
+          }, 500)
+        } else {
+          return callback(new Error('订单编号格式错误，请重新输入'))
+        }
       }
     }
     const checkCustomerCode = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('顾客账户不能为空'))
+        return callback(new Error('顾客账号不能为空'))
       } else {
-        setTimeout(() => {
-          userExist(value).then(({ data }) => {
-            if (!data) {
-              this.form.customerCode = ''
-              this.form.customerCodeInput = ''
-              this.form.customerName = ''
-              return callback(new Error('顾客账户不存在，请重新输入'))
-            } else {
-              this.form.customerCode = data.id
-              this.form.customerCodeInput = data.userCode
-              this.form.customerName = data.userName
-              return callback()
-            }
-          })
-        }, 500)
+        if ((/^[\w]+$/.test(value))) {
+          setTimeout(() => {
+            userExist(value).then(({ data }) => {
+              if (!data) {
+                this.form.customerCode = ''
+                this.form.customerCodeInput = ''
+                this.form.customerName = ''
+                return callback(new Error('顾客账号不存在，请重新输入'))
+              } else {
+                this.form.customerCode = data.id
+                this.form.customerCodeInput = data.userCode
+                this.form.customerName = data.userName
+                return callback()
+              }
+            })
+          }, 500)
+        } else {
+          return callback(new Error('顾客账号格式错误，请重新输入'))
+        }
       }
     }
     const checkGoodCount = (rule, value, callback) => {
@@ -181,26 +205,30 @@ export default {
       if (!value) {
         return callback(new Error('请输入商品编号'))
       } else {
-        const index = Number(rule.field.split('.')[1])
-        const len = this.form.goods.length
-        for (let i = 0; i < len; i++) {
-          if (this.form.goods[i].goodCode === value && i !== index) {
-            return callback(new Error('商品已存在，请输入不同的的商品'))
+        if ((/^[\w]+$/.test(value))) {
+          const index = Number(rule.field.split('.')[1])
+          const len = this.form.goods.length
+          for (let i = 0; i < len; i++) {
+            if (this.form.goods[i].goodCode === value && i !== index) {
+              return callback(new Error('商品已存在，请输入不同的的商品'))
+            }
           }
+          goodExist(value).then(({ data }) => {
+            if (!data) {
+              this.form.goods[index].goodCode = ''
+              this.form.goods[index].goodName = ''
+              this.form.goods[index].inventory = ''
+              return callback(new Error('商品不存在，请重新输入'))
+            } else {
+              this.form.goods[index].goodCode = data.id
+              this.form.goods[index].goodName = data.goodName
+              this.form.goods[index].inventory = data.inventory
+              return callback()
+            }
+          })
+        } else {
+          return callback(new Error('商品编号格式错误，请重新输入'))
         }
-        goodExist(value).then(({ data }) => {
-          if (!data) {
-            this.form.goods[index].goodCode = ''
-            this.form.goods[index].goodName = ''
-            this.form.goods[index].inventory = ''
-            return callback(new Error('商品不存在，请重新输入'))
-          } else {
-            this.form.goods[index].goodCode = data.id
-            this.form.goods[index].goodName = data.goodName
-            this.form.goods[index].inventory = data.inventory
-            return callback()
-          }
-        })
       }
     }
     const checkQuantity = (rule, value, callback) => {
@@ -256,7 +284,8 @@ export default {
       methodList: [],
       rules: {
         billCode: [
-          { validator: checkBillCode, required: true, trigger: 'blur' }
+          { validator: checkBillCode, required: true, trigger: 'blur' },
+          { min: 3, max: 12, message: '请输入3位及以上12位及以下英文字母和数字', trigger: 'blur' }
         ],
         customerCodeInput: [
           { validator: checkCustomerCode, required: true, trigger: 'blur' }
@@ -269,7 +298,8 @@ export default {
           { validator: checkGoodCount, trigger: 'change' }
         ],
         goodCodeInput: [
-          { validator: checkGoodCode, required: true, trigger: 'blur' }
+          { validator: checkGoodCode, required: true, trigger: 'blur' },
+          { min: 3, max: 12, message: '请输入3位及以上12位及以下英文字母和数字', trigger: 'blur' }
         ],
         quantity: [
           { validator: checkQuantity, required: true, trigger: 'blur' }

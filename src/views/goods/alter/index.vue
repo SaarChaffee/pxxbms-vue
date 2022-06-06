@@ -2,10 +2,20 @@
   <div class="app-container">
     <el-form ref="form" :model="form" status-icon :rules="rules">
       <el-form-item label="商品名" prop="goodName">
-        <el-input v-model="form.goodName" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.goodName"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入1位及以上12位及以下的字符"
+        />
       </el-form-item>
       <el-form-item label="商品库存" prop="inventory">
-        <el-input v-model="form.inventory" type="text" auto-complete="false" />
+        <el-input
+          v-model="form.inventory"
+          type="text"
+          auto-complete="false"
+          placeholder="请输入正整数"
+        />
       </el-form-item>
       <el-form-item label="商品类型" prop="goodType">
         <el-select v-model="form.goodType" clearable placeholder="---请选择---">
@@ -18,8 +28,17 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="上传商品图片或输入图片地址" prop="detail.cover">
-        <el-input v-model="form.detail.cover" type="text" placeholder="图片地址" auto-complete="false" />
+      <el-form-item
+        label="上传商品图片或输入图片地址"
+        prop="detail.cover"
+        :rules="rules.detail"
+      >
+        <el-input
+          v-model="form.detail.cover"
+          type="text"
+          placeholder="图片地址"
+          auto-complete="false"
+        />
         <el-upload
           ref="upload"
           :disabled="disabledUpload"
@@ -93,16 +112,24 @@ export default {
       if (!value) {
         return callback(new Error('商品名不能为空'))
       } else {
-        return callback()
+        if ((/^.*[ ].*$/.test(value))) {
+          return callback(new Error('商品名格式错误'))
+        } else {
+          return callback()
+        }
       }
     }
     const checkInventory = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('库存不能为空'))
       } else {
-        setTimeout(() => {
-          return value > 0 ? callback() : callback(new Error('库存不能为空'))
-        }, 500)
+        if (/^\+?[1-9]\d*$/.test(value)) {
+          setTimeout(() => {
+            return callback()
+          }, 500)
+        } else {
+          return callback(new Error('库存必须为正整数'))
+        }
       }
     }
     const checkType = (rule, value, callback) => {
@@ -112,6 +139,20 @@ export default {
         setTimeout(() => {
           return value > 0 ? callback() : callback(new Error('商品类型不能为空'))
         }, 500)
+      }
+    }
+    const checkUrl = (rule, value, callback) => {
+      if (!value) {
+        return callback()
+      } else {
+        if (/^https?:\/\/(.+\/)+.+(\.(png|jpg|jpeg))$/.test(value)) {
+          this.$refs['upload'].fileList.push({
+            'url': this.form.detail.cover
+          })
+          return callback()
+        } else {
+          return callback(new Error('图片地址不合法'))
+        }
       }
     }
     return {
@@ -138,15 +179,18 @@ export default {
       typeList: [],
       rules: {
         goodName: [
-          { validator: checkGoodName, required: true, trigger: 'blur' }
+          { validator: checkGoodName, required: true, trigger: 'blur' },
+          { min: 1, max: 12, message: '请输入1位及以上12位及以下的字符', trigger: 'blur' }
         ],
         inventory: [
           { validator: checkInventory, required: true, trigger: 'blur' }
         ],
         goodType: [
           { validator: checkType, required: true, trigger: 'blur' }
+        ],
+        detail: [
+          { validator: checkUrl, trigger: 'blur' }
         ]
-
       }
     }
   },

@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item label="用户角色" prop="queryUserRole">
         <el-select v-model="form.queryUserRole" clearable placeholder="---请选择---">
-          <el-option :value="0" disabled label="---请选择---" />
+          <el-option value="0" disabled label="---请选择---" />
           <el-option v-for="role in form.roleList" :key="role.id" :label="role.roleName" :value="role.id" />
         </el-select>
       </el-form-item>
@@ -118,7 +118,7 @@ export default {
       loading: false,
       form: {
         roleList: [],
-        queryUserRole: 0,
+        queryUserRole: '0',
         queryUserName: '',
         pageParam: {
           'total': 0,
