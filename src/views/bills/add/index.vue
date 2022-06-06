@@ -298,8 +298,7 @@ export default {
           { validator: checkGoodCount, trigger: 'change' }
         ],
         goodCodeInput: [
-          { validator: checkGoodCode, required: true, trigger: 'blur' },
-          { min: 3, max: 12, message: '请输入3位及以上12位及以下英文字母和数字', trigger: 'blur' }
+          { validator: checkGoodCode, required: true, trigger: 'blur' }
         ],
         quantity: [
           { validator: checkQuantity, required: true, trigger: 'blur' }
