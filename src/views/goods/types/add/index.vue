@@ -35,7 +35,17 @@ export default {
         }, 500)
       }
     }
-
+    const checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('商品类型名称不能为空'))
+      } else {
+        if ((/^((?:[\u3400-\u4DB5\u4E00-\u9FEA\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0])|(\w))+$/.test(value))) {
+          return callback(new Error('商品类型名称格式错误'))
+        } else {
+          return callback()
+        }
+      }
+    }
     return {
 
       form: {
@@ -48,7 +58,7 @@ export default {
           { validator: checkCode, trigger: 'blur' }
         ],
         typeName: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
+          { validator: checkName, required: true, message: '请输入名称', trigger: 'blur' },
           { min: 2, message: '请输入长度大于等于2的字符', trigger: 'blur' }
         ]
       }
