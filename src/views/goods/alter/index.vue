@@ -146,9 +146,11 @@ export default {
         return callback()
       } else {
         if (/^https?:\/\/(.+\/)+.+(\.(png|jpg|jpeg))$/.test(value)) {
-          this.$refs['upload'].fileList.push({
-            'url': this.form.detail.cover
-          })
+          if (this.$refs['upload'].uploadFiles.length <= 0) {
+            this.$refs['upload'].uploadFiles.push({
+              'url': this.form.detail.cover
+            })
+          }
           return callback()
         } else {
           return callback(new Error('图片地址不合法'))
@@ -196,7 +198,7 @@ export default {
   },
   mounted() {
     this.getGood(this.$route.params.id)
-    this.$refs['upload'].fileList.push({
+    this.$refs['upload'].uploadFiles.push({
       'url': this.form.detail.cover
     })
   },
