@@ -22,6 +22,7 @@
           type="date"
           format="yyyy-MM-dd"
           value-format="yyyy-MM-dd"
+          readonly
           placeholder="选择日期"
         />
       </el-form-item>
