@@ -11,8 +11,8 @@
       </el-form-item>
       <el-form-item label="性别" prop="gender">
         <el-radio-group v-model="form.gender">
-          <el-radio :label="1">男</el-radio>
-          <el-radio :label="2">女</el-radio>
+          <el-radio disabled :label="1">男</el-radio>
+          <el-radio disabled :label="2">女</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="出生日期" prop="birthday">
@@ -107,9 +107,6 @@ export default {
         userName: [
           { validator: checkName, required: true, message: '请输入姓名', trigger: 'blur' },
           { min: 2, message: '请输入长度大于等于2的字符', trigger: 'blur' }
-        ],
-        gender: [
-          { required: true, message: '请选择性别', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
