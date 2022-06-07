@@ -16,6 +16,9 @@
               主页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/profile/index">
+            <el-dropdown-item>我的账号</el-dropdown-item>
+          </router-link>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
@@ -50,7 +53,7 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push('/login')
     }
   }
 }
