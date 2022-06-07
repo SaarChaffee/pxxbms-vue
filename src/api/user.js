@@ -82,3 +82,26 @@ export function delUser(id) {
     method: 'get'
   })
 }
+
+export function getProfile(id) {
+  return request({
+    url: '/user/profile/' + id,
+    method: 'get'
+  })
+}
+
+export function judge(userId, oldPassword) {
+  return request({
+    url: '/user/profile/judge',
+    method: 'post',
+    data: { oldPassword, userId }
+  })
+}
+
+export function updPasswd(userId, newPassword) {
+  return request({
+    url: '/user/profile/updatePasswd',
+    method: 'post',
+    data: { newPassword, userId }
+  })
+}
