@@ -21,14 +21,14 @@
         />
       </el-form-item>
 
-      <el-form-item prop="password">
+      <el-form-item prop="passwordInput">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="loginForm.passwordInput"
           :type="passwordType"
           placeholder="密码"
           name="password"
@@ -48,17 +48,19 @@
 </template>
 
 <script>
+import CryptoJs from 'crypto-js'
 export default {
   name: 'Login',
   data() {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        passwordInput: ''
       },
       loginRules: {
         username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        passwordInput: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       loading: false,
       passwordType: 'password',
@@ -88,6 +90,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.password = CryptoJs.MD5(this.loginForm.passwordInput).toString()
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false

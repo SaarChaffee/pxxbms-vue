@@ -17,9 +17,9 @@
           placeholder="请输入3位及以上12位及以下的字符"
         />
       </el-form-item>
-      <el-form-item label="密码" prop="userPassword">
+      <el-form-item label="密码" prop="userPasswordInput">
         <el-input
-          v-model.trim="form.userPassword"
+          v-model.trim="form.userPasswordInput"
           type="password"
           auto-complete="false"
           placeholder="请输入长度大于等于3的字符"
@@ -77,6 +77,7 @@
 
 <script>
 import { toAdd, exist, add } from '@/api/user'
+import cryptoJs from 'crypto-js'
 export default {
   name: 'UserAdd',
   data() {
@@ -115,7 +116,7 @@ export default {
         return callback(new Error('密码不能为空'))
       } else {
         setTimeout(() => {
-          if (value === this.form.userPassword) {
+          if (value === this.form.userPasswordInput) {
             return callback()
           } else {
             return callback(new Error('两次密码输入不一致'))
@@ -156,6 +157,7 @@ export default {
         userCode: '',
         userName: '',
         userPassword: '',
+        userPasswordInput: '',
         resurePassword: '',
         gender: '',
         birthday: '',
@@ -173,7 +175,7 @@ export default {
           { validator: checkName, required: true, trigger: 'blur' },
           { min: 3, max: 12, message: '请输入3位及以上12位及以下的字符', trigger: 'blur' }
         ],
-        userPassword: [
+        userPasswordInput: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 3, message: '请输入长度大于等于3的字符', trigger: 'blur' }
         ],
@@ -209,7 +211,7 @@ export default {
     submitForm(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          console.log(this.form)
+          this.form.userPassword = cryptoJs.MD5(this.form.userPasswordInput).toString()
           add({ ...this.form, currentId: this.$store.state.user.id }).then(({ success, message }) => {
             if (success) {
               this.$message({
