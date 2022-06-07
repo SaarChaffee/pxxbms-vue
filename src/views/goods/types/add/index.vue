@@ -9,7 +9,7 @@
           v-model="form.typeName"
           type="text"
           auto-complete="false"
-          placeholder="请输入1位及以上12位及以下英文字母和数字"
+          placeholder="请输入1位及以上12位及以下汉字，字母和数字"
         />
       </el-form-item>
       <el-form-item>
@@ -27,17 +27,21 @@ export default {
   data() {
     const checkCode = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('商品类型编号'))
+        return callback(new Error('请输入商品类型编号'))
       } else {
-        setTimeout(() => {
-          exist(value).then(({ data }) => {
-            if (!data) {
-              return callback()
-            } else {
-              return callback(new Error('编号已被使用，请重新输入'))
-            }
-          })
-        }, 500)
+        if ((/^[\w]+$/.test(value))) {
+          setTimeout(() => {
+            exist(value).then(({ data }) => {
+              if (!data) {
+                return callback()
+              } else {
+                return callback(new Error('编号已被使用，请重新输入'))
+              }
+            })
+          }, 500)
+        } else {
+          return callback(new Error('商品类型编号格式错误，请重新输入'))
+        }
       }
     }
     const checkName = (rule, value, callback) => {
@@ -59,12 +63,12 @@ export default {
       },
       rules: {
         typeCode: [
-          { required: true, message: '请输入编号', trigger: 'blur' },
-          { validator: checkCode, trigger: 'blur' }
+          { validator: checkCode, required: true, trigger: 'blur' },
+          { min: 1, max: 12, message: '请输入1位及以上12位及以下字母和数字', trigger: 'blur' }
         ],
         typeName: [
           { validator: checkName, required: true, trigger: 'blur' },
-          { min: 1, max: 12, message: '请输入1位及以上12位及以下汉字字母和数字', trigger: 'blur' }
+          { min: 1, max: 12, message: '请输入1位及以上12位及以下汉字，字母和数字', trigger: 'blur' }
         ]
       }
     }
