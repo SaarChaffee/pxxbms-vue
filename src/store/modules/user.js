@@ -1,7 +1,6 @@
 import { login, getInfo, logout } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-
 const getDefaultState = () => {
   return {
     token: getToken(),
@@ -60,7 +59,7 @@ const actions = {
         const { user } = datas
         const avatar = 'https://storage.googleapis.com/wcorp_public/waifulab/preview/0f3f1ce56b69ffccf0c80fd8f60225851651819750.png'
         commit('SET_NAME', user.userCode)
-        commit('SET_AVATAR', avatar)
+        commit('SET_AVATAR', user.avatar || avatar)
         commit('SET_ID', user.id)
         commit('SET_ROLE', user.userRole)
       }
