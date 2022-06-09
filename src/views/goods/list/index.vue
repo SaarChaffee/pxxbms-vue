@@ -88,12 +88,14 @@
           <el-button
             type="primary"
             size="mini"
+            :disabled="scope.row.owner!==owner"
             @click="toAlter(scope.row.id)"
           >编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
+            :disabled="scope.row.owner!==owner"
             @click="delGood(scope.row.id)"
           >删除
           </el-button>
@@ -144,7 +146,8 @@ export default {
           'pages': 0
         }
       },
-      goods: []
+      goods: [],
+      owner: this.$store.state.user.id
     }
   },
   mounted() {
