@@ -34,6 +34,7 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('user/getInfo')
           const role = store.getters.role
           if (!['1', '2'].includes(role)) {
+            await store.dispatch('user/resetToken')
             Message.error('权限不足无法登陆')
             next('/login')
             NProgress.done()
