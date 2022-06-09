@@ -33,6 +33,11 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           await store.dispatch('user/getInfo')
           const role = store.getters.role
+          if (!['1', '2'].includes(role)) {
+            Message.error('权限不足无法登陆')
+            next('/login')
+            NProgress.done()
+          }
           store.dispatch('GenerateRoutes', role).then(() => { // 生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
