@@ -36,56 +36,57 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    meta: { roles: ['1', '2'] },
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '主页', icon: 'dashboard' }
+      meta: { title: '主页', icon: 'dashboard', roles: ['1', '2'] }
     }]
   },
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  }
+]
+export const asyncRoutes = [
 
   {
     path: '/user',
     component: Layout,
     redirect: '/user/list',
-    meta: { title: '用户管理', icon: 'el-icon-user' },
+    meta: { title: '用户管理', icon: 'el-icon-user', roles: ['1'] },
     children: [
       {
         path: 'list',
         name: 'list',
         component: () => import('@/views/users/list/index'),
-        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+        meta: { title: '列表', icon: 'el-icon-notebook-2', roles: ['1'] }
       },
       {
         path: 'add',
         name: 'add',
         component: () => import('@/views/users/add/index'),
-        meta: { title: '添加', icon: 'el-icon-plus' }
+        meta: { title: '添加', icon: 'el-icon-plus', roles: ['1'] }
       },
       {
         path: 'show/:id',
         name: 'show',
         hidden: true,
         component: () => import('@/views/users/show/index'),
-        meta: { title: '详情', icon: 'el-icon-tickets' }
+        meta: { title: '详情', icon: 'el-icon-tickets', roles: ['1'] }
       },
       {
         path: 'alter/:id',
         name: 'alter',
         hidden: true,
         component: () => import('@/views/users/alter/index'),
-        meta: { title: '修改', icon: 'el-icon-setting' }
+        meta: { title: '修改', icon: 'el-icon-setting', roles: ['1'] }
       }
     ]
   },
@@ -93,33 +94,33 @@ export const constantRoutes = [
     path: '/bill',
     component: Layout,
     redirect: '/bill/list',
-    meta: { title: '订单管理', icon: 'el-icon-user' },
+    meta: { title: '订单管理', icon: 'el-icon-user', roles: ['1', '2'] },
     children: [
       {
         path: 'list',
         name: 'list',
         component: () => import('@/views/bills/list/index'),
-        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+        meta: { title: '列表', icon: 'el-icon-notebook-2', roles: ['1', '2'] }
       },
       {
         path: 'add',
         name: 'add',
         component: () => import('@/views/bills/add/index'),
-        meta: { title: '添加', icon: 'el-icon-plus' }
+        meta: { title: '添加', icon: 'el-icon-plus', roles: ['1', '2'] }
       },
       {
         path: 'show/:id',
         hidden: true,
         name: 'show',
         component: () => import('@/views/bills/show/index'),
-        meta: { title: '详情', icon: 'el-icon-tickets' }
+        meta: { title: '详情', icon: 'el-icon-tickets', roles: ['1', '2'] }
       },
       {
         path: 'alter/:id',
         hidden: true,
         name: 'alter',
         component: () => import('@/views/bills/alter/index'),
-        meta: { title: '修改', icon: 'el-icon-setting' }
+        meta: { title: '修改', icon: 'el-icon-setting', roles: ['1', '2'] }
       }
     ]
   },
@@ -127,65 +128,65 @@ export const constantRoutes = [
     path: '/good',
     component: Layout,
     redirect: '/good/list',
-    meta: { title: '商品管理', icon: 'el-icon-user' },
+    meta: { title: '商品管理', icon: 'el-icon-user', roles: ['1', '2'] },
     children: [
       {
         path: 'list',
         name: 'list',
         component: () => import('@/views/goods/list/index'),
-        meta: { title: '列表', icon: 'el-icon-notebook-2' }
+        meta: { title: '列表', icon: 'el-icon-notebook-2', roles: ['1', '2'] }
       },
       {
         path: 'add',
         name: 'add',
         component: () => import('@/views/goods/add/index'),
-        meta: { title: '添加', icon: 'el-icon-plus' }
+        meta: { title: '添加', icon: 'el-icon-plus', roles: ['1', '2'] }
       },
       {
         path: 'show/:id',
         hidden: true,
         name: 'show',
         component: () => import('@/views/goods/show/index'),
-        meta: { title: '详情', icon: 'el-icon-tickets' }
+        meta: { title: '详情', icon: 'el-icon-tickets', roles: ['1', '2'] }
       },
       {
         path: 'alter/:id',
         hidden: true,
         name: 'alter',
         component: () => import('@/views/goods/alter/index'),
-        meta: { title: '修改', icon: 'el-icon-setting' }
+        meta: { title: '修改', icon: 'el-icon-setting', roles: ['1', '2'] }
       },
       {
         path: 'type',
         redirect: '/good/type/list',
         component: () => import('@/views/goods/types/index'),
-        meta: { title: '商品类型管理', icon: 'el-icon-user' },
+        meta: { title: '商品类型管理', icon: 'el-icon-user', roles: ['1', '2'] },
         children: [
           {
             path: 'list',
             name: 'list',
             component: () => import('@/views/goods/types/list'),
-            meta: { title: '列表', icon: 'el-icon-notebook-2' }
+            meta: { title: '列表', icon: 'el-icon-notebook-2', roles: ['1', '2'] }
           },
           {
             path: 'add',
             name: 'add',
             component: () => import('@/views/goods/types/add'),
-            meta: { title: '添加', icon: 'el-icon-plus' }
+            meta: { title: '添加', icon: 'el-icon-plus', roles: ['1', '2'] }
           },
           {
             path: 'show/:id',
             hidden: true,
             name: 'show',
             component: () => import('@/views/goods/types/show'),
-            meta: { title: '详情', icon: 'el-icon-tickets' }
+            meta: { title: '详情', icon: 'el-icon-tickets', roles: ['1', '2'] }
           },
           {
             path: 'alter/:id',
             hidden: true,
             name: 'alter',
             component: () => import('@/views/goods/types/alter'),
-            meta: { title: '修改', icon: 'el-icon-setting' }
+            meta: { title: '修改', icon: 'el-icon-setting', roles: ['1', '2'] }
           }
         ]
       }
@@ -195,20 +196,20 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
+    meta: { roles: ['1', '2'] },
     hidden: true,
     children: [
       {
         path: 'index',
         component: () => import('@/views/profile/index'),
         name: 'Profile',
-        meta: { title: '我的账号', icon: 'user', noCache: true }
+        meta: { title: '我的账号', icon: 'user', noCache: true, roles: ['1', '2'] }
       }
     ]
   },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
