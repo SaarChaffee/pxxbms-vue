@@ -16,9 +16,6 @@
               <el-tab-pane label="修改密码" name="changepassword">
                 <ChangePassword />
               </el-tab-pane>
-              <el-tab-pane label="Timeline" name="timeline">
-                <timeline />
-              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -31,12 +28,11 @@
 import { getProfile } from '@/api/user'
 import UserCard from './components/UserCard'
 import ChangePassword from './components/ChangePassword'
-import Timeline from './components/Timeline'
 import Account from './components/Account'
 
 export default {
   name: 'Profile',
-  components: { UserCard, ChangePassword, Timeline, Account },
+  components: { UserCard, ChangePassword, Account },
   data() {
     return {
       user: {},
