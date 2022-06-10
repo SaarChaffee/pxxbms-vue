@@ -88,14 +88,14 @@
           <el-button
             type="primary"
             size="mini"
-            :disabled="scope.row.owner!==owner"
+            :disabled="!isAdminOrOwner(scope.row.owner)"
             @click="toAlter(scope.row.id)"
           >编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            :disabled="scope.row.owner!==owner"
+            :disabled="!isAdminOrOwner(scope.row.owner)"
             @click="delGood(scope.row.id)"
           >删除
           </el-button>
@@ -147,7 +147,8 @@ export default {
         }
       },
       goods: [],
-      owner: this.$store.state.user.id
+      owner: this.$store.state.user.id,
+      role: this.$store.state.user.role
     }
   },
   mounted() {
@@ -184,6 +185,9 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 500)
+    },
+    isAdminOrOwner(id) {
+      return this.role === '1' ? true : !!(id === this.owner)
     },
     reset() {
       this.$refs['form'].resetFields()
