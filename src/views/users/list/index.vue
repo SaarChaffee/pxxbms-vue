@@ -42,7 +42,7 @@
           {{ scope.row.userName }}
         </template>
       </el-table-column>
-      <el-table-column label="年龄" width="140">
+      <el-table-column label="年龄" width="100">
         <template slot-scope="scope">
           {{ scope.row.age }}
         </template>
@@ -52,7 +52,7 @@
           {{ scope.row.gender === 1 ? '男' : '女' }}
         </template>
       </el-table-column>
-      <el-table-column label="电话" width="220">
+      <el-table-column label="电话" width="180">
         <template slot-scope="scope">
           {{ scope.row.phone }}
         </template>

@@ -37,7 +37,7 @@
           {{ scope.row.billCode }}
         </template>
       </el-table-column>
-      <el-table-column label="商品数量" width="180">
+      <el-table-column label="商品数量" width="140">
         <template slot-scope="scope">
           {{ scope.row.goodCount }}
         </template>
@@ -52,17 +52,17 @@
           {{ scope.row.customerName }}
         </template>
       </el-table-column>
-      <el-table-column label="付款方式" width="220">
+      <el-table-column label="付款方式" width="140">
         <template slot-scope="scope">
           {{ scope.row.paymentMethodName }}
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="140">
+      <el-table-column label="创建时间" width="220">
         <template slot-scope="scope">
           {{ scope.row.billTime | dateFormat }}
         </template>
       </el-table-column>
-      <el-table-column label="付款时间" width="140">
+      <el-table-column label="付款时间" width="220">
         <template v-if="scope.row.deliveryTime" slot-scope="scope">
           {{ scope.row.deliveryTime | dateFormat }}
         </template>
